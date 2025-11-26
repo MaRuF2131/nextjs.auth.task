@@ -11,16 +11,20 @@ export default function Register() {
   const router = useRouter();
 
   const handleRegister = async () => {
-    // Demo: এখানে তুমি backend API call করতে পারো
-    // যেমন: POST /api/register { name, email, password }
-
-    // Demo validation
     if (!name || !email || !password) {
       setErrorMsg("All fields are required");
       return;
     }
 
     try {
+
+            const resp = await fetch("/api/users/register",{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({ name,email,password })
+            });
+            const data = await resp.json();
+            if(data.error){ setErrorMsg(data.error); return; }
       // Registration successful → Auto login
       const res = await signIn("credentials", {
         redirect: false,
