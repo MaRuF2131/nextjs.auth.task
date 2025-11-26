@@ -2,6 +2,8 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
+import clientPromise from "@/lib/mongodb";
+import bcrypt from "bcryptjs";
 
 export const authOptions = {
   providers: [
@@ -16,28 +18,25 @@ export const authOptions = {
     }),
 
     // ❗ REAL EMAIL+PASSWORD LOGIN
-    CredentialsProvider({
-      name: "Credentials Login",
+   CredentialsProvider({
+        name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
       },
-
       async authorize(credentials) {
-        const { email, password } = credentials;
-        const demoUser = {
-          id: 1,
-          name: "Maruf",
-          email: "test@test.com",
-          password: "123456"
-        };
+        const client = await clientPromise;
+        const db = client.db("nextjs_app");
+        const users = db.collection("users");
 
-        if (email === demoUser.email && password === demoUser.password) {
-          return demoUser; // SUCCESS
-        }
+        const user = await users.findOne({ email: credentials.email });
+        if (!user) throw new Error("No user found");
 
-        return null; // FAIL hole null return
-      }
+        const isValid = await bcrypt.compare(credentials.password, user.password);
+        if (!isValid) throw new Error("Incorrect password");
+
+        return { id: user._id.toString(), name: user.name, email: user.email };
+      },
     }),
   ],
 
