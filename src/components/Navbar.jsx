@@ -14,7 +14,7 @@ return (
 
 <div className="flex gap-6 items-center">
 <Link href="/">Home</Link>
-<Link href="/items">Products</Link>
+<Link href="/product">Products</Link>
 <Link href="#features">Features</Link>
 <Link href="#about">About</Link>
 
