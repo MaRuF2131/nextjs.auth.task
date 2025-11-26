@@ -8,7 +8,7 @@ const { data: session } = useSession()
 
 
 return (
-<nav className="sticky top-0 bg-white shadow z-50 p-4 flex justify-between items-center">
+<nav className="sticky top-0 bg-white shadow z-[999] w-full p-4 flex justify-between items-center">
 <Link href="/" className="font-bold text-xl">MyStore</Link>
 
 
