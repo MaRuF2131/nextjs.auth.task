@@ -1,42 +1,46 @@
 "use client";
 
-import { signIn } from "next-auth/react";
-import { useState } from "react";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const { data: session, status } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const router = useRouter();
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
+
+  if (status === "loading") {
+    return <p>Loading...</p>;
+  }
 
   const handleLogin = async () => {
     const res = await signIn("credentials", {
       email,
       password,
-      redirect: false
+      redirect: false,
     });
 
     if (res.error) {
       setErrorMsg("Invalid email or password");
     } else {
-      window.location.href = "/";
+      router.push("/");
     }
   };
-
-  if(useSession().status === "loading"){
-    return <p>Loading...</p>
-  }
-  if(useSession().status === "authenticated" || useSession().data){
-    window.location.href = "/";
-  }
 
   return (
     <div className="max-w-md mx-auto mt-20 bg-white p-6 shadow rounded">
       <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
 
-      {errorMsg && (
-        <p className="mb-3 text-red-600 text-center">{errorMsg}</p>
-      )}
+      {errorMsg && <p className="mb-3 text-red-600 text-center">{errorMsg}</p>}
 
       <input
         className="w-full border p-2 mb-3"
