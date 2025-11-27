@@ -1,6 +1,6 @@
   const Fetch = async (path,method,body,massege) => {
     try {
-      const res = await fetch(path,{ 
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}${path}`,{ 
         method: method || "GET",
         body: body ? JSON.stringify(body) : undefined,
         headers: { "Content-Type":"application/json" }

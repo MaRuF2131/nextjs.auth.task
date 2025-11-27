@@ -3,13 +3,9 @@ import Link from "next/link";
 
 export default async function ItemDetails({ params }) {
 
-  const { id } = await params;
-  const host = "localhost:3000";
-  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
-  const baseUrl = `${protocol}://${host}`;
-
+  const { id } =await params;
   // Fetch single product from API
-  const res = await Fetch(`${baseUrl}/api/products?id=${id}`,'GET',null,'Failed to load product');
+  const res = await Fetch(`/api/products?id=${id}`,'GET',null,'Failed to load product');
 
   const data = res;
   
