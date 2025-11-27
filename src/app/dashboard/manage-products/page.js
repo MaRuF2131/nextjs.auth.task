@@ -54,7 +54,7 @@ export default function ManageProducts() {
   return (
     <Protected>
       <div className="w-full bg-black p-6 min-h-screen">
-      <div className="max-w-3xl mx-auto p-6 bg-white">
+      <div className="max-w-3xl mx-auto p-6 bg-white text-black rounded shadow ">
         <h2 className="text-3xl font-bold mb-4">Manage Products</h2>
 
         {errorMsg && <p className="text-red-600 mb-3">{errorMsg}</p>}
