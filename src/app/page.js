@@ -4,7 +4,7 @@ import TrendingProduct from "@/components/TrendingProduct";
 
 export default function Home() {
   return (
-    <div className=" min-h-screen  bg-zinc-50 font-sans">
+    <div className=" min-h-screen  bg-black text-white font-sans">
         <Hero></Hero>
         <TrendingProduct />
         <Section title="Why Choose Us" subtitle="Quality, affordability, and trust" />
