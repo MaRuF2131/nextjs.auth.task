@@ -26,7 +26,7 @@ if(loading){
     return <p>Loading...</p>
 }
 return (
-<div className="p-6">
+<div className="p-6 bg-black text-white min-h-screen">
 <h2 className="text-3xl font-bold mb-2">Products</h2>
 <input className="border p-2 w-full mb-4" placeholder="Search products..." />
 
