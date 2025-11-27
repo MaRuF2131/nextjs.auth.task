@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react";
 import Protected from "../../../components/ProdectedWrapper";
+import Fetch from '@/utils/fetch'
 
 export default function AddProduct() {
   const [title,setTitle] = useState("");
@@ -24,20 +25,16 @@ export default function AddProduct() {
     }
 
     try {
-      const res = await fetch("/api/products",{
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify({
+      const res = await Fetch("/api/products","POST",{
           title,
           description: shortDesc,
           fullDescription: fullDesc,
           price: Number(price),
           image
-        })
-      });
-      const data = await res.json();
-      if(data.error){
-        setErrorMsg(data.error);
+        }, "Failed to add product");
+      const data = res;
+      if(data.errorMsg){
+        setErrorMsg(data.errorMsg);
       } else {
         setSuccessMsg("Product added successfully!");
         setTitle(""); setShortDesc(""); setFullDesc(""); setPrice(""); setImage("");

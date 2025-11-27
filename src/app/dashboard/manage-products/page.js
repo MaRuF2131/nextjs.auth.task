@@ -2,7 +2,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Protected from "../../../components/ProdectedWrapper";
-
+import Image from "next/image";
+import Fetch from '@/utils/fetch' 
 export default function ManageProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,9 +13,16 @@ export default function ManageProducts() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/products");
-      const data = await res.json();
-      setProducts(data);
+      const res = await Fetch("/api/products","GET",null,"Failed to load products");
+      const data = res
+      console.log("data", data);
+      
+      if (data.errorMsg || !data.success) {
+        setErrorMsg(data.errorMsg || "Failed to load products");
+        setProducts([]);
+        return;
+      }
+      setProducts(data.data);
     } catch (err) {
       setErrorMsg("Failed to load products");
     } finally {
@@ -31,8 +39,8 @@ export default function ManageProducts() {
     if (!confirm("Are you sure you want to delete this product?")) return;
 
     try {
-      const res = await fetch(`/api/products?id=${id}`, { method: "DELETE" });
-      const data = await res.json();
+      const res = await Fetch(`/api/products?id=${id}`, "DELETE", null, "Failed to delete product");
+      const data = res;
       if (data.success) {
         setProducts(products.filter(p => p._id !== id));
       } else {
@@ -57,7 +65,9 @@ export default function ManageProducts() {
             <thead className="bg-gray-200">
               <tr>
                 <th className="p-2">ID</th>
+                <th className="p-2">Image</th>
                 <th className="p-2">Title</th>
+                <th className="p-2">Short Description</th>
                 <th className="p-2">Price</th>
                 <th className="p-2">Actions</th>
               </tr>
@@ -65,9 +75,11 @@ export default function ManageProducts() {
             <tbody>
               {products.map(p => (
                 <tr key={p._id} className="text-center border-b">
-                  <td className="p-2">{p._id.slice(-6)}</td>
-                  <td className="p-2">{p.title}</td>
-                  <td className="p-2">${p.price}</td>
+                  <td className="p-2">{p?._id.slice(-6)}</td>
+                  <td className="p-2"><Image width={100} height={100} src={p?.image || "https://via.placeholder.com/50"} alt={p?.title} className="w-12 h-12 object-cover mx-auto" /></td>
+                  <td className="p-2">{p?.title}</td>
+                  <td className="p-2">{p?.description}</td>
+                  <td className="p-2">${p?.price}</td>
                   <td className="p-2 flex justify-center gap-3">
                     <Link href={`/items/${p._id}`} className="text-blue-600">View</Link>
                     <button
