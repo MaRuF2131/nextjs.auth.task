@@ -48,7 +48,8 @@ export default function AddProduct() {
 
   return (
     <Protected>
-      <div className="max-w-lg mx-auto p-6 bg-white rounded shadow mt-10">
+      <div className="w-full bg-black p-6 min-h-screen">
+      <div className="max-w-lg mx-auto p-6 bg-white rounded shadow ">
         <h2 className="text-2xl font-bold mb-4">Add Product</h2>
 
         {successMsg && <p className="text-green-600 mb-3">{successMsg}</p>}
@@ -67,6 +68,7 @@ export default function AddProduct() {
         >
           {loading ? "Adding..." : "Submit"}
         </button>
+      </div>
       </div>
     </Protected>
   )
