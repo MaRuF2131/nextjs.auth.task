@@ -53,7 +53,8 @@ export default function ManageProducts() {
 
   return (
     <Protected>
-      <div className="max-w-3xl mx-auto p-6">
+      <div className="w-full bg-black p-6 min-h-screen">
+      <div className="max-w-3xl mx-auto p-6 bg-white">
         <h2 className="text-3xl font-bold mb-4">Manage Products</h2>
 
         {errorMsg && <p className="text-red-600 mb-3">{errorMsg}</p>}
@@ -81,7 +82,7 @@ export default function ManageProducts() {
                   <td className="p-2">{p?.description}</td>
                   <td className="p-2">${p?.price}</td>
                   <td className="p-2 flex justify-center gap-3">
-                    <Link href={`/items/${p._id}`} className="text-blue-600">View</Link>
+                    <Link href={`/product/${p._id}`} className="text-blue-600">View</Link>
                     <button
                       onClick={() => handleDelete(p._id)}
                       className="text-red-600"
@@ -94,6 +95,7 @@ export default function ManageProducts() {
             </tbody>
           </table>
         )}
+      </div>
       </div>
     </Protected>
   );
