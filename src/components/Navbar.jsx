@@ -2,11 +2,18 @@
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
 import { useState } from 'react';
-
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
 const { data: session } = useSession()
 const [hover, setHover] = useState(false);
+
+const router = useRouter();
+
+const handleLogout = async () => {
+  await signOut({ redirect: false }); 
+  router.push("/"); 
+};
 
 
 return (
@@ -17,8 +24,8 @@ return (
 <div className="flex gap-6 items-center">
 <Link href="/">Home</Link>
 <Link href="/product">Products</Link>
-<Link href="#features">Features</Link>
-<Link href="#about">About</Link>
+<Link href="/features">Features</Link>
+<Link href="/about">About</Link>
 
 
 {!session ? (
@@ -34,7 +41,7 @@ return (
 <div onClick={()=>setHover(false)} className={` ${hover ? "block" : "hidden"} w-auto min-w-56 absolute right-0 mt-4 px-4 py-2 bg-white border rounded shadow`}>
 <Link href="/dashboard/add-product" className="block w-full p-2">Add Product</Link>
 <Link href="/dashboard/manage-products" className="block w-full p-2 ">Manage Products</Link>
-<button onClick={() => signOut()} className="block w-full text-left p-2  text-red-600">Logout</button>
+<button onClick={() => handleLogout()} className="block w-full text-left p-2  text-red-600">Logout</button>
 </div>
 </div>
 )}

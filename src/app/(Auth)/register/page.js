@@ -1,14 +1,26 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const { data: session, status } = useSession();
   const router = useRouter();
+
+    // Redirect if already logged in
+    useEffect(() => {
+      if (status === "authenticated") {
+        router.push("/");
+      }
+    }, [status, router]);
+  
+    if (status === "loading") {
+      return <p>Loading...</p>;
+    }
 
   const handleRegister = async () => {
     if (!name || !email || !password) {
@@ -18,7 +30,7 @@ export default function Register() {
 
     try {
 
-            const resp = await fetch("/api/users/register",{
+      const resp = await fetch("/api/users/register",{
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify({ name,email,password })
