@@ -1,36 +1,208 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+🛒 Next.js Product Management App
 
-## Getting Started
+A full-stack product management application built using Next.js (App Router) with user authentication powered by NextAuth.js and database storage using MongoDB (Official MongoDB Driver).
+The app includes both public pages and protected pages (Add Product, Manage Products).
 
-First, run the development server:
+🚀 Live Demo https://nextjs-auth-task.vercel.app
 
-```bash
+(তুমি এখানে Vercel live link দেবে)
+
+✨ Features
+🔓 Public Pages
+
+Landing Page with:
+
+Sticky Navbar
+
+Hero Section
+
+Trending Products
+
+Features / Sections
+
+Responsive Design
+
+Product Listing Page
+
+Product Details Page
+
+🔐 Authentication
+
+Google Login
+
+GitHub Login
+
+Email + Password Login (Credentials Provider)
+
+Secure JWT session using NextAuth
+
+Custom Login & Register Page (MongoDB User Storage)
+
+🔒 Protected Pages
+
+Add Product (only logged-in users)
+
+Manage Products (View/Delete)
+
+Server-side session verification
+
+Client wrapper to protect UI components
+
+🛢️ Database
+
+MongoDB (Official driver, no Mongoose)
+
+Store:
+
+Users
+
+Products
+
+⚙️ Backend (API Routes)
+
+/api/auth/[...nextauth] → Authentication handling
+
+/api/products → GET, POST, DELETE
+
+Fully secured API only allowing modification if user has a valid session token
+
+🧰 Tech Stack
+Frontend
+
+Next.js 14 (App Router)
+
+React 18
+
+Tailwind CSS
+
+NextAuth.js (Client + Server)
+
+Backend
+
+API Routes via Next.js
+
+MongoDB Driver (No Mongoose)
+
+Auth Providers
+
+Google
+
+GitHub
+
+Credentials (Email + Password)
+
+📂 Project Structure
+src/
+ ├── app/
+ │   ├── login/
+ │   ├── register/
+ │   ├── product/
+ │   │     ├── page.js
+ │   │     └── [id]/page.js
+ │   ├── add-product/
+ │   ├── manage-products/
+ │   ├── api/
+ │   │     ├── auth/[...nextauth]/route.js
+ │   │     └── products/route.js
+ ├── components/
+ │   ├── Navbar.jsx
+ │   ├── ProtectedWrapper.jsx
+ │   ├── TrendingProducts.jsx
+ │   └── Loader.jsx
+ └── lib/
+     └── mongodb.js
+
+⚙️ Environment Variables
+
+Create a .env.local file:
+
+# Auth URLs
+NEXTAUTH_URL=http://localhost:3000
+
+# JWT Secret
+NEXTAUTH_SECRET=your-secret-key
+
+# Google Auth
+GOOGLE_ID=your-google-client-id
+GOOGLE_SECRET=your-google-secret
+
+# GitHub Auth
+GITHUB_ID=your-github-client-id
+GITHUB_SECRET=your-github-secret
+
+# MongoDB
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/
+
+🛠️ Installation & Setup
+# 1️⃣ Clone the repo
+git clone https://github.com/yourname/yourrepo.git
+cd yourrepo
+
+# 2️⃣ Install dependencies
+npm install
+
+# 3️⃣ Set environment variables
+
+Create .env.local (as shown above)
+
+# 4️⃣ Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+# Visit:
+👉 http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🧭 Route Summary
+# Route	Type	Description
+# /	Public	Landing Page
+# /login	Public	Login (Google, GitHub, Credentials)
+# /register	Public	Register User
+# /product	Public	Product Listing
+# /product/[id]	Public	Product Details
+# /add-product	Protected	Add new product
+# /manage-products	Protected	View + Delete products
+# /api/products	API	GET, POST, DELETE
+# /api/auth/[...nextauth]	Auth	NextAuth providers
+# 🔒 Protected Routes
 
-## Learn More
+# Protected pages use a custom wrapper:
 
-To learn more about Next.js, take a look at the following resources:
+# import { useSession } from "next-auth/react";
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# export default function Protected({ children }) {
+  # const { status } = useSession();
+  # if (status === "loading") return <p>Loading...</p>;
+  # if (status === "unauthenticated") return redirect("/login");
+  # return children;
+}
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+🧪 Screenshots (Optional Section)
 
-## Deploy on Vercel
+# You can add screenshots here:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# /public/screenshots/
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# 📦 Deployment
+Deploy to Vercel:
+vercel
+
+
+# Make sure you set all environment variables in Vercel Dashboard → Project Settings → Environment Variables.
+
+📜 License
+
+MIT License
+
+🎉 Final Notes
+
+This project demonstrates:
+
+Full authentication
+
+Protected routes
+
+MongoDB database operations
+
+Clean UI & responsive layout
+
+App Router best practices
