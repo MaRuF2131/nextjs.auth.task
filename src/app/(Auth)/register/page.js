@@ -55,6 +55,7 @@ export default function Register() {
   };
 
   return (
+    <div className="w-full bg-black p-6 min-h-screen">
     <div className="max-w-md mx-auto mt-20 bg-white p-6 shadow rounded">
       <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
 
@@ -89,5 +90,6 @@ export default function Register() {
         Register
       </button>
     </div>
+  </div>
   );
 }
