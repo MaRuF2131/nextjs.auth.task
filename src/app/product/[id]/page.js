@@ -11,7 +11,7 @@ export default async function ItemDetails({ params }) {
   
   if (!data || !data.success || data.errorMsg || !data.data) {
     return (
-      <div className="max-w-3xl mx-auto p-6">
+      <div className="max-w-3xl mx-auto p-6 bg-black text-white min-h-screen">
         <h2 className="text-2xl font-bold text-red-600">Product Not Found!</h2>
         <Link
           href="/product"
@@ -26,7 +26,8 @@ export default async function ItemDetails({ params }) {
   const product = data.data;
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
+    <div className="w-full bg-black p-6">
+    <div className="max-w-3xl mx-auto p-6 bg-white text-black min-h-screen">
       <img
         src={product.image || "https://picsum.photos/600"}
         className="w-full h-80 object-cover rounded"
@@ -46,5 +47,6 @@ export default async function ItemDetails({ params }) {
         Back
       </Link>
     </div>
+</div>
   );
 }
