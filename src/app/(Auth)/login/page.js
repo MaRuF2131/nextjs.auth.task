@@ -2,6 +2,7 @@
 
 import { signIn } from "next-auth/react";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -21,6 +22,13 @@ export default function Login() {
       window.location.href = "/";
     }
   };
+
+  if(useSession().status === "loading"){
+    return <p>Loading...</p>
+  }
+  if(useSession().status === "authenticated" || useSession().data){
+    window.location.href = "/";
+  }
 
   return (
     <div className="max-w-md mx-auto mt-20 bg-white p-6 shadow rounded">

@@ -1,15 +1,17 @@
 'use client'
 import { useSession } from 'next-auth/react'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 
 export default function Protected({ children }) {
 const { data: session, status } = useSession()
-
+const router = useRouter()
 
 if (status === 'loading') return <p>Loading...</p>
-if (!session) return redirect('/login')
-
+if (!session) {
+    router.push('/login')
+    return null
+}
 
 return children
 }
